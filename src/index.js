@@ -1,7 +1,22 @@
-import es6 from "./hello";
-import './style.css'
-import '../src/styles/index.scss'
-import '../src/styles/index.sass'
-import '../src/styles/index.less'
-console.log(es6.printA);
-console.log("HEllo webpack");
+import Vue from 'vue'
+import App from './App.vue'
+new Vue({
+    el:'#app',
+    // data:{
+    //     msg:'hello world'
+    // },
+    // template:`
+    //     <div>
+    //         <p>{{msg}}</p>
+    //     </div>
+    // `
+    // render(createElement){
+    //     return createElement('div',[createElement('h1',[createElement('span','呼呼')])])
+    // }
+    template:`
+        <App />
+    `,
+    components:{
+        App:App
+    }
+})

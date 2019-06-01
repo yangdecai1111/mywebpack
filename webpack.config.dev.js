@@ -1,4 +1,8 @@
 const path=require('path');
+const VueLoaderPlugin=require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin=require('html-webpack-plugin');
+const CopyWebpackPlugin=require('copy-webpack-plugin');
+const {CleanWebpackPlugin}=require("clean-webpack-plugin");
 module.exports={
     entry:'./src/index.js',
     // entry:{
@@ -8,7 +12,7 @@ module.exports={
     output:{
         path: path.join(__dirname,'./dist'),
         // filename:'main.js'
-        filename:'[name].js'
+        filename:'[name].[hash].js'
     },
     mode:'development',
     module:{
@@ -43,8 +47,33 @@ module.exports={
             {
                 test:/\.(png|jpeg|jpg|gif|apng)$/,
                 use:'file-loader'
+            },
+            {
+                test:/\.vue$/,
+                use:'vue-loader'
             }
         ]
-    }
+    },
+    //解析
+    resolve:{
+        //配置别名
+        alias:{
+            'vue':'vue/dist/vue.esm.js',
+        }
+    },
+    //配置插件
+    plugins:[
+        new VueLoaderPlugin(),
+        new HtmlWebpackPlugin({
+           // title:'我的天，阳德才真帅'
+           template:path.join(__dirname,'./public/index.html')
+        }),
+        new CopyWebpackPlugin([
+            {
+                from:path.join(__dirname,'./public')
+            }
+        ]),
+        new CleanWebpackPlugin()
+    ]
     
 }
